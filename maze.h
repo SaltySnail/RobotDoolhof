@@ -8,11 +8,11 @@
 
 namespace model {
 	class maze {
-			room rooms[(SCREEN_WIDTH/ROOM_SIZE)+1][(SCREEN_HEIGHT/ROOM_SIZE)+1];
+			room rooms[(SCREEN_WIDTH/ROOM_SIZE)][(SCREEN_HEIGHT/ROOM_SIZE)];
 		public:
 			void initRooms(void);
 			void draw(SDL_Renderer *renderer);
-			void generate(void);
+			void generate(SDL_Point *counter, bool *end);
 	};
 }
 
