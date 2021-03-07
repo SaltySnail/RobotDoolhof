@@ -10,7 +10,7 @@ namespace model {
 	class maze {
 			room rooms[(SCREEN_WIDTH/ROOM_SIZE)+1][(SCREEN_HEIGHT/ROOM_SIZE)+1];
 		public:
-			void setAllRoomSizes(void);
+			void initRooms(void);
 			void draw(SDL_Renderer *renderer);
 			void generate(void);
 	};

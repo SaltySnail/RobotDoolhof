@@ -33,7 +33,7 @@ void model::room::draw(SDL_Renderer *renderer) {
 					line[0].y = corners[top_right].y;
 					line[1].x = corners[bottom_right].x;
 					line[1].y = corners[bottom_right].y;
-					SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100); //RGBA
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
 				break;
@@ -43,7 +43,7 @@ void model::room::draw(SDL_Renderer *renderer) {
 					line[0].y = corners[top_right].y;
 					line[1].x = corners[top_left].x;
 					line[1].y = corners[top_left].y;
-					SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+					SDL_SetRenderDrawColor(renderer, 0, 255, 255, 100);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
 				break;
@@ -53,7 +53,7 @@ void model::room::draw(SDL_Renderer *renderer) {
 					line[0].y = corners[top_left].y;
 					line[1].x = corners[bottom_left].x;
 					line[1].y = corners[bottom_left].y;
-					SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+					SDL_SetRenderDrawColor(renderer, 255, 0, 255, 100);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
 				break;
@@ -63,7 +63,7 @@ void model::room::draw(SDL_Renderer *renderer) {
 					line[0].y = corners[bottom_left].y;
 					line[1].x = corners[bottom_right].x;
 					line[1].y = corners[bottom_right].y;
-					SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+					SDL_SetRenderDrawColor(renderer, 255, 255, 0, 100);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
 				break;
