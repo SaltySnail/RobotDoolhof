@@ -31,4 +31,4 @@ $(EXEC): $(OBJS) $(HDRS) Makefile
 
 # recipe to clean the workspace
 clean:
-	rm -f *.o $(EXEC) 
+	rm -f $(wildcard Model/*.o) $(wildcard Controller/*.o) $(wildcard View/*.o) $(EXEC) 
