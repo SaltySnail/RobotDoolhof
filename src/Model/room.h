@@ -19,7 +19,7 @@ namespace model {
 	};
 	class room {
 			int size;
-			bool visited = 0;
+			bool visited;
 			bool side_missing[bottom+1];
 			SDL_Point corners[top_right+1];
 			SDL_Point prev_room;	

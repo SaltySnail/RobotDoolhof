@@ -23,11 +23,11 @@ void model::room::setCoords(SDL_Point newPoint) {
 
 void model::room::draw(SDL_Renderer *renderer) {
 	SDL_Point line[2];
-	sides side;	
+/*	sides side;	
 	for (int i = 0; i < 4; i++) {
 	side = (sides)i;
 		switch(side) {
-			case right:
+			case right:*/
 				if (side_missing[right] == 0) {
 					line[0].x = corners[top_right].x;
 					line[0].y = corners[top_right].y;
@@ -36,8 +36,8 @@ void model::room::draw(SDL_Renderer *renderer) {
 					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //RGBA
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
-				break;
-			case top:
+				//break;
+			//case top:
 				if (side_missing[top] == 0) {
 					line[0].x = corners[top_right].x;
 					line[0].y = corners[top_right].y;
@@ -46,8 +46,8 @@ void model::room::draw(SDL_Renderer *renderer) {
 					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
-				break;
-			case left:
+			//	break;
+			//case left:
 				if (side_missing[left] == 0) {
 					line[0].x = corners[top_left].x;
 					line[0].y = corners[top_left].y;
@@ -56,8 +56,8 @@ void model::room::draw(SDL_Renderer *renderer) {
 					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
-				break;
-			case bottom:
+			//	break;
+		//	case bottom:
 				if (side_missing[bottom] == 0) {
 					line[0].x = corners[bottom_left].x;
 					line[0].y = corners[bottom_left].y;
@@ -66,11 +66,11 @@ void model::room::draw(SDL_Renderer *renderer) {
 					SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 					SDL_RenderDrawLines(renderer, line, 2);
 				}
-				break;
-			default:
-				break;
-		}
-	}
+		//		break;
+		//	default:
+		//		break;
+	//	}
+//	}
 		
 }
 
@@ -94,41 +94,8 @@ SDL_Point model::room::getPrev() {
 }
 
 bool model::room::isWallMissing(sides Side) {
-	//bool tmp;
-	printf("side: %d\n", Side);
-	return side_missing[Side];
-	/*switch (Side) {
-		case top:
-			printf("top\n");
-			if (side_missing[top] == 0) {
-				printf("minder top false\n");
-				return false;
-			}
-			else {
-				printf("minder top true\n");
-				return true;
-			}
-		case bottom:
-			printf("bottom\n");
-			if (side_missing[bottom] == 0)
-				return false;
-			else
-				return true;
-		case right:
-			printf("right\n");
-			if (side_missing[right] == 0)
-				return false;
-			else
-				return true;
-		case left:
-			printf("left\n");
-			if (side_missing[left] == 0)
-				return false;
-			else
-				return true;
-		default:
-			return false;
-			break;
+ 	if(side_missing[Side] == 1) {
+		return 1;
 	}
-	return false;*/
+	return 0;
 }

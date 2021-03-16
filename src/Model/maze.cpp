@@ -54,41 +54,39 @@ void model::maze::generate(SDL_Point *counter, bool *end) {
 					SDL_Point prev = rooms[i][j].getPrev();
 					i = prev.x;
 					j = prev.y;
-					printf("Backtracking from edgecase... \t jumping to %d, %d \n", i, j);
+					printf("Backtracking from edgecase... \t jumping to %d, %d, on address %p\n", i, j, &rooms[i][j]);
 					if (i == 0 && j == 0) {
 						*end = 1;
 					}
 				}
-				if (i+1 < SCREEN_WIDTH/ROOM_SIZE && rooms[i+1][j].isVisited() == 0 && chosen_neighbour == right) { //right side
-				      	rooms[i][j].setMissingWall(right);
-					rooms[i+1][j].setMissingWall(left);
-					rooms[i+1][j].setPrev(i, j);
-					printf("room %d, %d goes to right\n", i, j);
-					i++;
-				}
+					if (i+1 < SCREEN_WIDTH/ROOM_SIZE && rooms[i+1][j].isVisited() == 0 && chosen_neighbour == right) { //right side
+					      	rooms[i][j].setMissingWall(right);
+						rooms[i+1][j].setMissingWall(left);
+						rooms[i+1][j].setPrev(i, j);
+						printf("room %d, %d goes to right, on address %p\n", i, j, &rooms[i][j]);
+						i++;
+					}
 				if (j > 0 && rooms[i][j-1].isVisited() == 0 && chosen_neighbour == top) { //top side
 				      	rooms[i][j].setMissingWall(top);
 					rooms[i][j-1].setMissingWall(bottom);
 					rooms[i][j-1].setPrev(i, j);
-					printf("room %d, %d goes to top\n", i, j);
+					printf("room %d, %d goes to top, on address %p\n", i, j, &rooms[i][j]);
 					j--;
 				}
 				if (i > 0 && rooms[i-1][j].isVisited() == 0 && chosen_neighbour == left) { //left side
 				      	rooms[i][j].setMissingWall(left);
 					rooms[i-1][j].setMissingWall(right);
 					rooms[i-1][j].setPrev(i, j);
-					printf("room %d, %d goes to left\n", i, j);
+					printf("room %d, %d goes to left, on address %p\n", i, j, &rooms[i][j]);
 					i--;
 				}
 				if (j+1 < SCREEN_HEIGHT/ROOM_SIZE && rooms[i][j+1].isVisited() == 0 && chosen_neighbour == bottom) { //bottom side
 				      	rooms[i][j].setMissingWall(bottom);
 					rooms[i][j+1].setMissingWall(top);
 					rooms[i][j+1].setPrev(i, j);
-					printf("room %d, %d goes to bottom\n", i, j);
+					printf("room %d, %d goes to bottom, on address %p\n", i, j, &rooms[i][j]);
 					j++;
 				}
-		//}
-	//}
 	counter->x = i;
 	counter->y = j;
 }
@@ -96,10 +94,10 @@ void model::maze::generate(SDL_Point *counter, bool *end) {
 void model::maze::setStartEnd(SDL_Point setStart, SDL_Point setEnd) {
 	start.x = setStart.x;
 	start.y = setStart.y;
-	end.x = setEnd.x;
-	end.y = setEnd.y;
+	finish.x = setEnd.x;
+	finish.y = setEnd.y;
 	rooms[start.x][start.y].setMissingWall(top);
-	rooms[end.x][end.y].setMissingWall(bottom);
+	rooms[finish.x][finish.y].setMissingWall(bottom);
 }
 
 SDL_Point model::maze::getStart(void) {
@@ -107,30 +105,30 @@ SDL_Point model::maze::getStart(void) {
 }
 
 SDL_Point model::maze::getEnd(void) {
-	return end;
+	return finish;
 }
 
 void model::maze::stupidlyCorrectBorders(SDL_Renderer *renderer) {
 	SDL_Point line[2];
-	line[0].x = (end.x-1)*ROOM_SIZE;
-	line[0].y = end.y*ROOM_SIZE-1;
-	line[1].x = 0;
-	line[1].y = line[0].y;
+	line[0].x = SCREEN_WIDTH-1; //rechts
+	line[0].y = SCREEN_HEIGHT-1;
+	line[1].x = SCREEN_WIDTH-1;
+	line[1].y = 0;
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //RGBA
 	SDL_RenderDrawLines(renderer, line, 2);
-	line[0].x = SCREEN_WIDTH-1;
+	line[0].x = 0;
 	line[0].y = SCREEN_HEIGHT-1;
-	line[1].x = line[0].x;
-	line[1].y = 0;
+	line[1].x = SCREEN_WIDTH-ROOM_SIZE-1;
+	line[1].y = SCREEN_HEIGHT-1;
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //RGBA
 	SDL_RenderDrawLines(renderer, line, 2);
 }
 
 model::room *model::maze::getRoomByCoords(SDL_Point coords) {
-	if ((int)(coords.x*SCREEN_WIDTH/ROOM_SIZE) == coords.x*SCREEN_WIDTH/ROOM_SIZE &&
-	    (int)(coords.y*SCREEN_HEIGHT/ROOM_SIZE) == coords.y*SCREEN_HEIGHT/ROOM_SIZE) {
-		printf("returning room %d, %d\n", coords.x, coords.y);
-		return &rooms[coords.x*SCREEN_WIDTH/ROOM_SIZE][coords.y*SCREEN_HEIGHT/ROOM_SIZE];
+	if ((int)(coords.x/ROOM_SIZE) == coords.x/ROOM_SIZE &&
+	    (int)(coords.y/ROOM_SIZE) == coords.y/ROOM_SIZE) {
+		printf("returning room %d, %d, from address %p\n", coords.x/ROOM_SIZE, coords.y/ROOM_SIZE, &rooms[coords.x/ROOM_SIZE][coords.y/ROOM_SIZE]);
+		return &rooms[coords.x/ROOM_SIZE][coords.y/ROOM_SIZE];
 	}
-	printf("oeuf\n");	
+	printf("oeuf\n");
 }

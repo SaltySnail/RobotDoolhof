@@ -3,6 +3,9 @@
 void model::node::setVisited(void) { 
 	visited = true;
 }
+void model::node::setWeightBegin(void) { 
+	weight[top] = INT_MAX; 
+}
 void model::node::setCurrentRoom(room *currRoom) {
 	current_room = currRoom;
 }
@@ -13,48 +16,52 @@ void model::node::setPrevNode(node *prevNode) {
 	prev_node = prevNode;
 }
 void model::node::setWeightWalls() { 
-	if (missing_wall[top] == false)
+	if (missing_wall[top] == 0)
 		weight[top] = INT_MAX;
-	if (missing_wall[bottom] == false)
+	if (missing_wall[bottom] == 0)
 		weight[bottom] = INT_MAX;
-	if (missing_wall[right] == false)
+	if (missing_wall[right] == 0)
 		weight[right] = INT_MAX;
-	if (missing_wall[left] == false)
+	if (missing_wall[left] == 0)
 		weight[left] = INT_MAX;
 }
-void model::node::setWeightOpening(int *weight_counter) { 
-	if (missing_wall[top] == true) {
-		weight[top] = *weight_counter;
-		weight_counter++;
-	}
-	else if (missing_wall[bottom] == true) {
+void model::node::setWeightOpening(int *weight_counter, sides Side) { 
+	if (missing_wall[Side] == true) {
+		weight[Side] += *weight_counter;
+		//*weight_counter -= 1;
+		printf("Weight of side %d is: %d \n", Side, weight[top]);
+	}/*
+	if (missing_wall[bottom] == true) {
 		weight[bottom] = *weight_counter;
-		weight_counter++;
+		*weight_counter -= 1;
+		printf("Weight of bottom side is: %d \n", weight[bottom]);
 		}
-	else if (missing_wall[right] == true) {
+	if (missing_wall[right] == true) {
 		weight[right] = *weight_counter;
-		weight_counter++;
+		*weight_counter -= 1;
+		printf("Weight of right side is: %d \n", weight[right]);
 	}
-	else if (missing_wall[left] == true) {
+	if (missing_wall[left] == true) {
 		weight[left] = *weight_counter;
-		weight_counter++;
-	}
+		*weight_counter -= 1;
+		printf("Weight of left side is: %d \n", weight[left]);
+	}*/
 }
 
 void model::node::setWeightBacktracking(sides currentRoomWeight) {
 	switch (currentRoomWeight) {
 		case top:
 			weight[top] = INT_MAX;
-			setWeightBacktrackingPrevNode(bottom);
+			//setWeightBacktrackingPrevNode(bottom);
 		case bottom:
 			weight[bottom] = INT_MAX;
-			setWeightBacktrackingPrevNode(top);
+			//setWeightBacktrackingPrevNode(top);
 		case left:
 			weight[left] = INT_MAX;
-			setWeightBacktrackingPrevNode(right);
+			//setWeightBacktrackingPrevNode(right);
 		case right:
 			weight[right] = INT_MAX;
-			setWeightBacktrackingPrevNode(left);
+			//setWeightBacktrackingPrevNode(left);
 		default:
 			break;
 	}	
@@ -97,4 +104,8 @@ void model::node::setMissingWalls() {
 	missing_wall[right] = current_room->isWallMissing(right);
 	missing_wall[left] = current_room->isWallMissing(left);
 	printf("Missing walls: \t top: %d \t bottom: %d \t right: %d \t left: %d \n", missing_wall[top], missing_wall[bottom], missing_wall[right], missing_wall[left]);
+}
+
+model::node *model::node::getPrevNode(void) {
+	return prev_node;
 }

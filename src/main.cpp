@@ -14,7 +14,7 @@ int main(void) {
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_Point counter = {0, 0};
-	SDL_Point startMaze = {0, 0}, endMaze = {SCREEN_WIDTH/ROOM_SIZE, SCREEN_HEIGHT/ROOM_SIZE};
+	SDL_Point startMaze = {0, 0}, endMaze = {SCREEN_WIDTH/ROOM_SIZE+1, SCREEN_HEIGHT/ROOM_SIZE+1};
 	bool endGenerating = 0;
 	init.sdl(&window, &renderer);
 	model::maze maze;
@@ -44,10 +44,12 @@ int main(void) {
 			SDL_Delay(7);
 		}
 		else {
-			SDL_Delay(1);
+			//SDL_Delay(1); //1440p & 120 pixels/room
+			SDL_Delay(3); //1440p & 20 pixels/room
 			//SDL_Delay(5); //4k & 20 pixels/room
 		}
 	}
+	SDL_Quit();
 	//SDL_WaitThread( threadID, NULL );
 	return 0;	
 }
