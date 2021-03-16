@@ -10,7 +10,9 @@ namespace model {
 		public:
 			void init(maze *yourMaze);
 			void getNextRoom(SDL_Point *counter, int *weight_counter);
-			//void setWeightFinish(SDL_Point finish);	
+			void setWeightFinish(SDL_Point finish);	
+			bool isFinished(SDL_Point counter);
+			void setWeightStart(void);
 	};
 }
 

@@ -4,7 +4,8 @@
 #include "room.h"
 #include "init.h"
 
-#define ROOM_SIZE 40
+#define ROOM_SIZE 80
+//Mogelijke sizes op 2560x1440: 1, 2,4,5,8,10,16,20,32,40,80,160
 
 
 namespace model {

@@ -1,15 +1,15 @@
 #include "robot.h"
 
 void model::robot::init(SDL_Renderer *renderer, maze *yourMaze) {
-		
-		printf("stapje2.1\n");
 	txtr = IMG_LoadTexture(renderer, TXTR_ROBOT);
-		printf("stapje3\n");
 	location.x = 0;//start.x*ROOM_SIZE;
 	location.y = 0;//start.y*ROOM_SIZE;
 	myMaze = yourMaze;
-	printf("stapje4\n");
 	weight_counter = 0;
+	SDL_Point tmp;
+	tmp.x = SCREEN_WIDTH/ROOM_SIZE;
+	tmp.y = SCREEN_HEIGHT/ROOM_SIZE;
+	thePath.setWeightFinish(tmp);
 }
 
 void model::robot::draw(SDL_Renderer *renderer) {	
@@ -46,7 +46,7 @@ void model::robot::turn(float degrees) {
 			driving = true;
 		}
 		else {
-			printf("\t\tangle: %.2f \t desired_angle: %.2f\n", angle, desired_angle);	
+			//printf("\t\tangle: %.2f \t desired_angle: %.2f\n", angle, desired_angle);	
 			if (direction == turning_left) {	
 				angle -= ROBOT_TURN_SPEED;
 			}
@@ -68,22 +68,22 @@ void model::robot::setDesiredDegrees() { //deze eerst
 	tmp.y = counter.y;
 	setCurrentRoom();
 	thePath.getNextRoom(&counter, &weight_counter);
-	printf("Got the next room boss: %d, %d\n", counter.x, counter.y);
+	//printf("Got the next room boss: %d, %d\n", counter.x, counter.y);
 	if (counter.x > tmp.x) { 
 		desired_angle = degreesRight; 
-		printf("I chose right, with angle %.2f\n", desired_angle);
+		//printf("I chose right, with angle %.2f\n", desired_angle);
 	}
 	if (counter.y > tmp.y) {
 		desired_angle = degreesBottom;
-		printf("I chose bottom, with angle %.2f\n", desired_angle);
+		//printf("I chose bottom, with angle %.2f\n", desired_angle);
 	}
 	if (counter.x < tmp.x) {
 		desired_angle = degreesLeft;
-		printf("I chose left, with angle %.2f\n", desired_angle);
+		//printf("I chose left, with angle %.2f\n", desired_angle);
 	}
 	if (counter.y < tmp.y){
 		desired_angle = degreesTop;
-		printf("I chose top, with angle %.2f\n", desired_angle);
+		//printf("I chose top, with angle %.2f\n", desired_angle);
 	}
 		turning = true;
 	}	
@@ -113,15 +113,19 @@ void model::robot::update(void) {
 		thePath.init(myMaze);
 		path_init = true;
 	}
-	if (!driving) {	
-		setDesiredDegrees();
-	}
-	if (turning) {
-		turn(0);
-		//printf("turning\n");
-	}
-	if (driving) {
-		drive(ROBOT_SPEED);
-		printf("driving\n");
+	if (!thePath.isFinished(counter)) {
+		if (!driving) {	
+			setDesiredDegrees();
+		}
+		if (turning) {
+			turn(0);
+			//printf("turning\n");
+		}
+		if (driving) {
+			drive(ROBOT_SPEED);
+			//printf("driving\n");
+		}
+	} else {
+		angle++;
 	}	
 }

@@ -30,21 +30,19 @@ int main(void) {
 		quit = input.update();
 		if (!endGenerating) { 	
 			maze.generate(&counter, &endGenerating);
-			//printf("generate step \n\n");
 		}
 		else {
 			robot.update();
 		}
-		//printf("step \n\n");
 		maze.stupidlyCorrectBorders(renderer);
 		robot.draw(renderer);
 		maze.draw(renderer);	
 		SDL_RenderPresent(renderer);
 		if (endGenerating) {
-			SDL_Delay(7);
+			SDL_Delay(1);
 		}
 		else {
-			SDL_Delay(3); //1440p & 20 pixels/room
+			//SDL_Delay(3); //1440p & 20 pixels/room
 		}
 	}
 	SDL_DestroyRenderer(renderer);

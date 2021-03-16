@@ -79,10 +79,6 @@ SDL_Point model::room::getPrev() {
 }
 
 bool model::room::isWallMissing(sides Side) {
- 	//if(side_missing[Side] == 1) {
-	//	return 1;
-	//}
-	//return 0;
 	return side_missing[Side];
 }
 

@@ -29,7 +29,7 @@ void model::node::setWeightOpening(int *weight_counter, sides Side) {
 	if (missing_wall[Side] == true) {
 		weight[Side] += *weight_counter;
 		//*weight_counter -= 1;
-		printf("Weight of side %d is: %d \n", Side, weight[top]);
+		//printf("Weight of side %d is: %d \n", Side, weight[top]);
 	}/*
 	if (missing_wall[bottom] == true) {
 		weight[bottom] = *weight_counter;
@@ -103,7 +103,7 @@ void model::node::setMissingWalls() {
 	missing_wall[bottom] = current_room->isWallMissing(bottom);
 	missing_wall[right] = current_room->isWallMissing(right);
 	missing_wall[left] = current_room->isWallMissing(left);
-	printf("Missing walls: \t top: %d \t bottom: %d \t right: %d \t left: %d \n", missing_wall[top], missing_wall[bottom], missing_wall[right], missing_wall[left]);
+	//printf("Missing walls: \t top: %d \t bottom: %d \t right: %d \t left: %d \n", missing_wall[top], missing_wall[bottom], missing_wall[right], missing_wall[left]);
 }
 
 model::node *model::node::getPrevNode(void) {
